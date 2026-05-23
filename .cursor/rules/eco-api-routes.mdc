@@ -1,0 +1,12 @@
+---
+description: API route standards
+globs: app/api/**/*
+alwaysApply: false
+---
+
+# API routes
+
+- Validate all inputs with Zod.
+- Rate-limit public POST routes (contact, booking hold).
+- Razorpay webhook: verify signature on raw body; idempotent by payment/event id.
+- Return generic errors to clients; log details server-side without PII.

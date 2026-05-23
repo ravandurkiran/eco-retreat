@@ -1,0 +1,12 @@
+---
+description: Admin panel standards
+globs: app/admin/**/*
+alwaysApply: false
+---
+
+# Admin
+
+- All routes require auth middleware.
+- Layout metadata: robots noindex, nofollow.
+- Validate uploads: image types only, max 2MB, no executable content.
+- RBAC: only ADMIN role changes pricing and capacity.

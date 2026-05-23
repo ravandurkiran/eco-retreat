@@ -1,0 +1,10 @@
+---
+description: Content migration rules
+globs: content/**/*,prisma/seed*
+alwaysApply: false
+---
+
+# Content
+
+- Preserve migrated paragraphs verbatim from the-eco-retreat-old.
+- Flag unmapped blocks for user review; do not invent marketing claims.

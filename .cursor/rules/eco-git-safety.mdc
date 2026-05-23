@@ -1,0 +1,12 @@
+---
+description: Git commit and push safety
+alwaysApply: true
+---
+
+# Git safety
+
+- Only git commit or git push when the user explicitly requests it in the current message.
+- Never git push --force to main or master.
+- Never commit .env, .env.local, or files containing API secrets.
+- Use conventional commits; apply release labels per eco-github-release skill.
+- Before commit: git status, git diff, draft message, HEREDOC commit.

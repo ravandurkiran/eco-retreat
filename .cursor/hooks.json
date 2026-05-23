@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "hooks": {
+    "sessionStart": [
+      {
+        "type": "command",
+        "command": "echo '[eco-retreat] Check .cursor/skills/QUALITY_GATES.md for the current phase before merging.'"
+      }
+    ],
+    "afterFileEdit": [
+      {
+        "type": "command",
+        "command": "npm run lint --if-present",
+        "matcher": ".*\\.(ts|tsx)$"
+      }
+    ],
+    "beforeShellExecution": [
+      {
+        "type": "command",
+        "command": ".cursor/hooks/block-dangerous-git.sh",
+        "matcher": "git"
+      }
+    ]
+  }
+}

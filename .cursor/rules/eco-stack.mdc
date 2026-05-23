@@ -1,0 +1,13 @@
+---
+description: Eco Retreat stack and quality standards
+alwaysApply: true
+---
+
+# Eco Retreat stack
+
+- Next.js 15 App Router, TypeScript, Tailwind, Prisma, PostgreSQL, Razorpay.
+- Server Components by default; client only for booking UI, nav, cookie banner.
+- Never put RAZORPAY_KEY_SECRET or DATABASE_URL in client code or NEXT_PUBLIC_*.
+- Run QUALITY_GATES for the current phase before marking work complete.
+- Invoke eco-seo, eco-performance, eco-security-privacy after each phase.
+- Prefer migrated copy from the-eco-retreat-old; do not rewrite marketing text without user approval.
