@@ -1,26 +1,51 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f7f4ef;
+  --foreground: #1f2e1f;
+  --forest: #2d4a3e;
+  --earth: #6b5344;
+  --sage: #8fa88b;
+  --cream: #f7f4ef;
+  --sand: #e8e0d4;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-forest: var(--forest);
+  --color-earth: var(--earth);
+  --color-sage: var(--sage);
+  --color-cream: var(--cream);
+  --color-sand: var(--sand);
+  --font-sans: var(--font-body);
+  --font-serif: var(--font-display);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-body), system-ui, sans-serif;
+}
+
+:focus-visible {
+  outline: 2px solid var(--forest);
+  outline-offset: 2px;
+}
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 200;
+  padding: 0.75rem 1rem;
+  background: var(--forest);
+  color: var(--cream);
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 0 0 0.5rem 0;
+}
+
+.skip-link:focus {
+  left: 0;
 }

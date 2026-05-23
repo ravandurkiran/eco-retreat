@@ -1,0 +1,25 @@
+{
+  "ci": {
+    "collect": {
+      "numberOfRuns": 1,
+      "startServerCommand": "npm run start",
+      "startServerReadyPattern": "Local:",
+      "startServerReadyTimeout": 60000,
+      "url": [
+        "http://localhost:3000/",
+        "http://localhost:3000/programs/7-day",
+        "http://localhost:3000/book"
+      ]
+    },
+    "assert": {
+      "assertions": {
+        "categories:performance": ["warn", { "minScore": 0.85 }],
+        "categories:accessibility": ["warn", { "minScore": 0.9 }],
+        "categories:seo": ["warn", { "minScore": 0.9 }]
+      }
+    },
+    "upload": {
+      "target": "temporary-public-storage"
+    }
+  }
+}

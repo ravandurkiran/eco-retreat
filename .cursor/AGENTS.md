@@ -1,6 +1,6 @@
 # Eco Retreat — Cursor agents & skills
 
-Skills and subagents are ready. **No application code** has been scaffolded yet.
+**Phase 0–4 complete.** Booking, admin, enforced CSP, consent-gated analytics, Lighthouse CI. Deploy: `docs/deploy.md`. Run `db:push`, `db:seed`, configure production env before go-live.
 
 **Git:** Commits/pushes only when you explicitly ask. Use `eco-github-release` for branch names, PRs, and `release:major|minor|patch` labels.
 

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080" role="img" aria-label="Eco Retreat placeholder hero">
+  <defs>
+    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#2d4a3e"/>
+      <stop offset="100%" style="stop-color:#6b5344"/>
+    </linearGradient>
+  </defs>
+  <rect width="1920" height="1080" fill="url(#g)"/>
+  <text x="960" y="540" text-anchor="middle" fill="#f7f4ef" font-family="Georgia, serif" font-size="48">The Eco Retreat</text>
+  <text x="960" y="600" text-anchor="middle" fill="#8fa88b" font-family="sans-serif" font-size="24">Photo placeholder  upload in admin (Phase 3)</text>
+</svg>

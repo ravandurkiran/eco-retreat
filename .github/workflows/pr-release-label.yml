@@ -1,0 +1,38 @@
+name: PR release label
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches: [develop, main]
+
+permissions:
+  pull-requests: write
+  contents: read
+
+jobs:
+  label:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Apply semver label from commits
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          BASE="${{ github.event.pull_request.base.sha }}"
+          HEAD="${{ github.event.pull_request.head.sha }}"
+          LOG=$(git log --format=%B "${BASE}..${HEAD}" 2>/dev/null || echo "")
+          LABEL="release:none"
+          if echo "$LOG" | grep -qE 'BREAKING CHANGE|^[a-zA-Z]+(\([^)]+\))?!:'; then
+            LABEL="release:major"
+          elif echo "$LOG" | grep -qE '^feat(\([^)]+\))?:'; then
+            LABEL="release:minor"
+          elif echo "$LOG" | grep -qE '^(fix|perf)(\([^)]+\))?:'; then
+            LABEL="release:patch"
+          fi
+          PR="${{ github.event.pull_request.number }}"
+          for L in release:major release:minor release:patch release:none; do
+            gh pr edit "$PR" --remove-label "$L" 2>/dev/null || true
+          done
+          gh pr edit "$PR" --add-label "$LABEL" || echo "Label $LABEL may need to be created: gh label create $LABEL"

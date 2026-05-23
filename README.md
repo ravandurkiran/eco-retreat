@@ -1,36 +1,87 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# The Eco Retreat — website
 
-## Getting Started
+Full-stack business website for [The Eco Retreat](https://the-eco-retreat.com): programs, booking, Razorpay payments, admin, and charity impact pages.
 
-First, run the development server:
+## Stack
+
+- Next.js 16 · TypeScript · Tailwind CSS v4
+- PostgreSQL · Prisma
+- Razorpay
+
+## Getting started
 
 ```bash
+cp .env.example .env
+# Edit DATABASE_URL and other vars
+
+npm install
+npx prisma generate
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+**Full local test checklist:** [docs/LOCAL_TESTING.md](docs/LOCAL_TESTING.md)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Scripts
 
-## Learn More
+| Command | Description |
+|---------|-------------|
+| `npm run dev` | Development server |
+| `npm run build` | Production build |
+| `npm run lint` | ESLint |
+| `npm run db:generate` | Generate Prisma client |
+| `npm run db:migrate` | Run migrations (requires DB) |
 
-To learn more about Next.js, take a look at the following resources:
+## Cursor AI
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Skills: `.cursor/skills/` — invoke e.g. `eco-orchestrator`, `eco-implementer`
+- Agents: `.cursor/agents/`
+- Quality gates: `.cursor/skills/QUALITY_GATES.md`
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Booking setup (Phase 2)
 
-## Deploy on Vercel
+```bash
+cp .env.example .env
+# Set DATABASE_URL and Razorpay TEST keys (dashboard.razorpay.com)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+npx prisma db push
+npm run db:seed
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+npm run dev
+```
+
+Visit `/book` to test checkout. In **development**, payment auto-confirms via simulate endpoint (no webhook tunnel required). In **production**, configure Razorpay webhook → `https://YOUR_DOMAIN/api/webhooks/razorpay` with events `payment.captured` and `payment.failed`.
+
+## Admin setup (Phase 3)
+
+```bash
+# In .env (see .env.example)
+NEXTAUTH_SECRET=$(openssl rand -base64 32)
+NEXTAUTH_URL=http://localhost:3000
+ADMIN_EMAIL=admin@the-eco-retreat.com
+ADMIN_PASSWORD=your-secure-password
+
+npx prisma db push
+npm run db:seed   # also creates admin user when ADMIN_* are set
+npm run dev
+```
+
+Sign in at [http://localhost:3000/admin/login](http://localhost:3000/admin/login). Admin routes are **noindex** and blocked in `robots.txt`.
+
+Manage programs, dates/capacity, bookings, gallery uploads (`/public/uploads/gallery`), contact messages, and privacy policy versions.
+
+## Analytics (optional)
+
+Set `NEXT_PUBLIC_ANALYTICS_PROVIDER` to `plausible` or `ga4` and the matching ID in `.env`. Analytics scripts load **only after** cookie consent. Booking funnel events: `begin_checkout`, `purchase`, `cta_click`.
+
+## Launch
+
+See [docs/deploy.md](docs/deploy.md) for production checklist, env vars, and Search Console. Lighthouse CI runs on pull requests (`.github/workflows/lighthouse.yml`).
+
+## Phases
+
+- **Phase 0–3**: scaffold, marketing, booking, admin (done)
+- **Phase 4**: CSP enforce, consent analytics, Lighthouse CI, deploy docs (done)
+
+Legacy static site reference: `../the-eco-retreat-old/`
